@@ -9,9 +9,18 @@ def main():
     print("\n\t¡Bienvenido a la calculadora de Propinas!")
     
     try:
-        #Pedimos datos sobre los montos
-        total_factura = float(input("\nIngrese el monto de la factura: "))
-        porcentaje_propina = float(input("Ingrese el porcentaje de la propina: "))
+        total_factura = 0  # Inicializamos el monto de la factura
+        porcentaje_propina = 0
+
+        while total_factura <= 0:
+            total_factura = float(input("\nIngrese el monto de la factura: "))
+            if total_factura <= 0:
+                print("\tSolo facturas positivas.")
+
+        while porcentaje_propina <= 0:
+            porcentaje_propina = float(input("Ingrese el porcentaje de la propina: "))
+            if porcentaje_propina <= 0:
+                print("\tSolo porcentajes positivos.")
 
         #Llamamos a la func. calculadora_propina
         propina = calculadora_propina(total_factura, porcentaje_propina)

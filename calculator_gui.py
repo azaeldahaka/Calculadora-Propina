@@ -1,15 +1,30 @@
 import tkinter as tk
+from tkinter import messagebox
 from main import calculadora_propina
 
 def on_calcular():
     try:
         total_factura = float(entry_factura.get())
         porcentaje_propina = float(entry_porcentaje.get())
+
+        if total_factura <= 0 and porcentaje_propina <= 0:
+            messagebox.showerror("Error", "Ambos valores deben ser mayor a cero.")
+            return
+        
+        if total_factura <= 0:
+            messagebox.showerror("Error", "El monto de la factura debe ser mayor que cero.")
+            return
+
+        if porcentaje_propina <= 0:
+            messagebox.showerror("Error", "El porcentaje de propina debe ser mayor que cero.")
+            return
+        
+
         propina = calculadora_propina(total_factura, porcentaje_propina)
         total_con_propina = total_factura + propina
         resultado.set(f"Monto de la propina: ${propina:.2f}\nMonto total con propina: ${total_con_propina:.2f}")
     except ValueError:
-        resultado.set("Error: Por favor ingrese valores válidos.")
+        messagebox.showerror("Error", "Por favor ingrese valores válidos.")
 
 # Crear la ventana principal
 root = tk.Tk()
