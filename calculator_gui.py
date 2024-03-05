@@ -2,10 +2,17 @@ import tkinter as tk
 from tkinter import messagebox
 from main import calculadora_propina
 
-def on_calcular(event=None):  # Añadir event=None para permitir que la función sea llamada directamente y desde un evento
+def on_calcular(event=None):
     try:
-        total_factura = float(entry_factura.get())
-        porcentaje_propina = float(entry_porcentaje.get())
+        total_factura = entry_factura.get().strip()  # Obtener el valor del campo y eliminar espacios en blanco
+        porcentaje_propina = entry_porcentaje.get().strip()
+
+        if not total_factura or not porcentaje_propina:  # Verificar si algún campo está vacío
+            messagebox.showerror("Error", "Ningún campo debe estar vacío.")
+            return
+
+        total_factura = float(total_factura)
+        porcentaje_propina = float(porcentaje_propina)
 
         if total_factura <= 0 and porcentaje_propina <= 0:
             messagebox.showerror("Error", "Ambos valores deben ser mayor a cero.")
@@ -22,7 +29,6 @@ def on_calcular(event=None):  # Añadir event=None para permitir que la función
         propina = calculadora_propina(total_factura, porcentaje_propina)
         total_con_propina = total_factura + propina
         resultado.set(f"Monto de la propina: ${propina:.2f}\nMonto total con propina: ${total_con_propina:.2f}")
-        
     except ValueError:
         messagebox.showerror("Error", "Por favor ingrese valores válidos.")
 
