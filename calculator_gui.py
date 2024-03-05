@@ -36,6 +36,10 @@ def on_calcular(event=None):
 root = tk.Tk()
 root.title("Calculadora de Propinas")
 
+# Establecer dimensiones fijas y deshabilitar cambio de tamaño
+root.geometry("400x200")  # Ancho x Alto
+root.resizable(False, False)  # El primer argumento deshabilita el cambio de ancho, el segundo deshabilita el cambio de alto
+
 # Crear los widgets de la interfaz
 frame = tk.Frame(root)
 frame.pack(padx=10, pady=10)
