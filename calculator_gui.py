@@ -2,10 +2,16 @@ import tkinter as tk
 from tkinter import messagebox
 from main import calculadora_propina
 
+MAX_DIGITS = 15  # Definir el máximo número de dígitos permitido en los campos de entrada
+
 def on_calcular(event=None):
     try:
         total_factura = entry_factura.get().strip()  # Obtener el valor del campo y eliminar espacios en blanco
         porcentaje_propina = entry_porcentaje.get().strip()
+
+        if len(total_factura) > MAX_DIGITS or len(porcentaje_propina) > MAX_DIGITS:
+            messagebox.showerror("Error", f"Los números no deben tener más de {MAX_DIGITS} dígitos.")
+            return
 
         if not total_factura or not porcentaje_propina:  # Verificar si algún campo está vacío
             messagebox.showerror("Error", "Ningún campo debe estar vacío.")
