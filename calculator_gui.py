@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from main import calculadora_propina
 
-def on_calcular():
+def on_calcular(event=None):  # Añadir event=None para permitir que la función sea llamada directamente y desde un evento
     try:
         total_factura = float(entry_factura.get())
         porcentaje_propina = float(entry_porcentaje.get())
@@ -18,11 +18,11 @@ def on_calcular():
         if porcentaje_propina <= 0:
             messagebox.showerror("Error", "El porcentaje de propina debe ser mayor que cero.")
             return
-        
 
         propina = calculadora_propina(total_factura, porcentaje_propina)
         total_con_propina = total_factura + propina
         resultado.set(f"Monto de la propina: ${propina:.2f}\nMonto total con propina: ${total_con_propina:.2f}")
+        
     except ValueError:
         messagebox.showerror("Error", "Por favor ingrese valores válidos.")
 
@@ -39,12 +39,14 @@ label_factura.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
 entry_factura = tk.Entry(frame)
 entry_factura.grid(row=0, column=1, padx=10, pady=5)
+entry_factura.bind('<Return>', on_calcular)  # Asociar la tecla "Enter" al evento on_calcular
 
 label_porcentaje = tk.Label(frame, text="Porcentaje de propina:")
 label_porcentaje.grid(row=1, column=0, padx=10, pady=5, sticky="w")
 
 entry_porcentaje = tk.Entry(frame)
 entry_porcentaje.grid(row=1, column=1, padx=10, pady=5)
+entry_porcentaje.bind('<Return>', on_calcular)  # Asociar la tecla "Enter" al evento on_calcular
 
 button_calcular = tk.Button(frame, text="Calcular Propina", command=on_calcular)
 button_calcular.grid(row=2, columnspan=2, padx=10, pady=10)
