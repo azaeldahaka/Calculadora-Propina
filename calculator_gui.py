@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 from main import calculadora_propina
+from file_handling import guardar_facturas, cargar_facturas
 
 MAX_DIGITS = 15  # Definir el máximo número de dígitos permitido en los campos de entrada
 
-historial_pagos = []  # Lista para almacenar el historial de pagos
+historial_pagos = cargar_facturas()  # Cargar el historial de pagos al iniciar la aplicación
 
 # Función para calcular la propina
 def on_calcular(event=None):
@@ -41,8 +42,11 @@ def on_calcular(event=None):
         # Actualizar el texto de las etiquetas
         resultado.set(f"Monto de la propina: ${propina:.2f}\nMonto total con propina: ${total_con_propina:.2f}")
 
-        # Agregar el pago al historial
+         # Agregar el pago al historial
         historial_pagos.append((total_factura, porcentaje_propina, propina, total_con_propina))
+        
+        # Guardar las facturas en el archivo
+        guardar_facturas(historial_pagos)
 
     except ValueError:
         messagebox.showerror("Error", "Por favor ingrese valores válidos.")
